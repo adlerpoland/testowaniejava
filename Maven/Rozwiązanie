@@ -1,0 +1,4 @@
+1. mvn archetype:generate
+2. mvn compile
+3. mvn package
+4. java -cp target/Maven-1.0-SNAPSHOT.jar Maven.App
