@@ -62,24 +62,52 @@ public class Ship
 					else if(direction=='E')
 						xxyy[0]++;
 					else if(direction=='W')
-						xxyy[0]--;
-					if(isIsland(xxyy))
-						System.out.println("Statek napotkal wyspe na pozycji ["+xxyy[0]+","+xxyy[1]+"]");
-						return false;
-					else
-						setPosition(xxyy);					
+						xxyy[0]--;				
 					break;
 				case 'w':
-					
+					if(direction=='N')
+						xxyy[1]--;
+					else if(direction=='S')
+						xxyy[1]++;
+					else if(direction=='E')
+						xxyy[0]--;
+					else if(direction=='W')
+						xxyy[0]++;				
 					break;
 				case 'l':
-						
+					if(direction=='N')
+						direction = 'W';
+					else if(direction=='S')
+						direction = 'E';
+					else if(direction=='E')
+						direction = 'N';
+					else if(direction=='W')
+						direction = 'S';		
 					break
 				case 'p':
-					
+					if(direction=='N')
+						direction = 'E';
+					else if(direction=='S')
+						direction = 'W';
+					else if(direction=='E')
+						direction = 'S';
+					else if(direction=='W')
+						direction = 'N';		
+					break
+				default: 
+					return false;
 					break;
-				default: return false;
-					break;
+			}
+			setDirection(direction);
+			if(isIsland(xxyy))
+			{
+				System.out.println("Statek napotkal wyspe na pozycji ["+xxyy[0]+","+xxyy[1]+"]");
+				return false;
+			}
+			else
+			{
+				System.out.println("RUCH NA POLE ["+xxyy[0]+","+xxyy[1]+"]");
+				setPosition(xxyy);	
 			}
 		}
 		return true;
