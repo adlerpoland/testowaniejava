@@ -37,6 +37,22 @@ public class AppTest
 		
 		assertArrayEquals(xy,resultArray);
 	}
+	public void testGetMapSize()
+	{
+		int[] xy = {0,0};
+		int[] result = ship.getMapSize();
+		
+		assertNotSame(xy,result);
+	}
+	public void testShipSetDirection()
+	{
+		char direction = 'N';
+		ship.setDirection(direction)
+		
+		char result = ship.getDirection();
+		
+		assertEquals(direction,result);
+	}
 	public void testShipGetDirection()
 	{
 		char direction = '';
@@ -73,6 +89,8 @@ public class AppTest
 	}
 	public void testShipMoveFront()
 	{
+		ship.hideIslands();
+		
 		int[] position = ship.getPosition();
 		char direction = ship.getDirection();
 		
@@ -92,6 +110,8 @@ public class AppTest
 	}
 	public void testShipMoveBack()
 	{
+		ship.hideIslands();
+		
 		int[] position = ship.getPosition();
 		char direction = ship.getDirection();
 		
@@ -111,6 +131,8 @@ public class AppTest
 	}
 	public void testShipMovement()
 	{
+		ship.showIslands();
+		
 		int[] position = {0,0};
 		char direction = 'E';
 		
@@ -127,6 +149,8 @@ public class AppTest
 	}
 	public void testShipCollision()
 	{
+		ship.showIslands();
+		
 		int[] position = {5,5};
 		char direction = 'N';
 		ship.setPosition(position);
