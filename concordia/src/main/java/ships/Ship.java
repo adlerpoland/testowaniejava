@@ -2,9 +2,19 @@ package ships;
 
 public class Ship 
 {
+	//Ship Position
 	private int[] xy = {0,0};
+	//Ship Direction
 	private char dir = 'N';
-	private int[] mapsize = {20,20};
+	
+	//Map Size and Islands
+	private int[][] mapislands = new int[20][20];
+	
+	mapislands[3][3] = 1;
+	mapislands[7][5] = 1;
+	mapislands[13][3] = 1;
+	mapislands[15][15] = 1;
+	mapislands[14][15] = 1;
 	
 	
     public void setPosition(int[] xxyy)
@@ -29,6 +39,7 @@ public class Ship
 	
 	public int[] getMapSize()
 	{
+		int[] mapsize = {mapislands.length,mapislands[0].length}
 		return mapsize;
 	}
 	
@@ -39,28 +50,47 @@ public class Ship
 		for(int i=0,i<n,i++)
 		{
 			char c = str.charAt(i);
+			int xxyy = getPosition();
+			char direction = getDirection();
+			
 			switch(c){
 				case 'n':
-				
+					if(direction=='N')
+						xxyy[1]++;
+					else if(direction=='S')
+						xxyy[1]--;
+					else if(direction=='E')
+						xxyy[0]++;
+					else if(direction=='W')
+						xxyy[0]--;
+					if(isIsland(xxyy))
+						System.out.println("Statek napotkal wyspe na pozycji ["+xxyy[0]+","+xxyy[1]+"]");
+						return false;
+					else
+						setPosition(xxyy);					
 					break;
 				case 'w':
-				
+					
 					break;
 				case 'l':
-					
+						
 					break
 				case 'p':
-				
+					
 					break;
 				default: return false;
 					break;
 			}
 		}
+		return true;
 	}
 	
-	public boolean isIsland()
+	public boolean isIsland(int[] xxyy)
 	{
-		
+		if(mapislands[xxyy[0]][xxyy[1]]==1)
+			return true;
+		else
+			return false;
 	}
 	
 }
