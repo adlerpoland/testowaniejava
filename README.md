@@ -1,6 +1,8 @@
 #PATRYK ADLER
 
 Wejsciowa tabela 15x15
+
+X - wyspa
 <table>
   <tbody>
     <tr>
@@ -31,7 +33,7 @@ Wejsciowa tabela 15x15
       <th>6</th><td></td><td></td><td></td><td>X</td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
-      <th>5</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>X</td><td></td><td></td><td></td>X<td></td><td></td><td></td><td></td>
+      <th>5</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>X</td><td></td><td></td><td></td><td>X</td><td></td><td></td><td></td>
     </tr>
     <tr>
       <th>4</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
@@ -40,7 +42,7 @@ Wejsciowa tabela 15x15
       <th>3</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
-      <th>2</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td>X<td></td><td></td><td></td><td></td><td></td><td></td>
+      <th>2</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>X</td><td></td><td></td><td></td><td></td><td></td><td></td>
     </tr>
     <tr>
       <th>1</th><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td></td><td>X</td><td>X</td><td></td><td></td><td></td><td></td><td></td>
