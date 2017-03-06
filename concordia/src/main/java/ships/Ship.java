@@ -1,4 +1,4 @@
-package ships;
+package ships.ships;
 
 public class Ship 
 {
@@ -8,14 +8,8 @@ public class Ship
 	private char dir = 'N';
 	
 	//Map Size and Islands
-	private int[][] mapislands = new int[20][20];
 	
-	mapislands[3][3] = 1;
-	mapislands[7][5] = 1;
-	mapislands[13][3] = 1;
-	mapislands[15][15] = 1;
-	mapislands[14][15] = 1;
-	
+	int[][] mapislands = new int[20][20];
 	
     public void setPosition(int[] xxyy)
     {
@@ -39,18 +33,18 @@ public class Ship
 	
 	public int[] getMapSize()
 	{
-		int[] mapsize = {mapislands.length,mapislands[0].length}
+		int[] mapsize = {mapislands.length,mapislands[0].length};
 		return mapsize;
 	}
 	
 	public boolean move(String str)
 	{
 		//nnnlnnpnnw
-		int n = str.length()
-		for(int i=0,i<n,i++)
+		int n = str.length();
+		for(int i=0;i<n;i++)
 		{
 			char c = str.charAt(i);
-			int xxyy = getPosition();
+			int[] xxyy = getPosition();
 			char direction = getDirection();
 			
 			switch(c){
@@ -83,7 +77,7 @@ public class Ship
 						direction = 'N';
 					else if(direction=='W')
 						direction = 'S';		
-					break
+					break;
 				case 'p':
 					if(direction=='N')
 						direction = 'E';
@@ -93,10 +87,9 @@ public class Ship
 						direction = 'S';
 					else if(direction=='W')
 						direction = 'N';		
-					break
+					break;
 				default: 
 					return false;
-					break;
 			}
 			setDirection(direction);
 			if(isIsland(xxyy))
@@ -113,7 +106,7 @@ public class Ship
 		return true;
 	}
 	
-	public boolean isIsland(int[] xxyy)
+	public Boolean isIsland(int[] xxyy)
 	{
 		if(mapislands[xxyy[0]][xxyy[1]]==1)
 			return true;
