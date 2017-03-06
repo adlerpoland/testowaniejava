@@ -1,42 +1,35 @@
-package ships;
+package ships.ships;
 
-import junit.framework.Test;
-import junit.framework.TestCase;
-import junit.framework.TestSuite;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
-public class AppTest 
-    extends TestCase
-{
-    /**
-     * Create the test case
-     *
-     * @param testName name of the test case
-     */
-    public AppTest( String testName )
-    {
-        super( testName );
-    }
+import static org.junit.Assert.*;
+import org.junit.Before;
+import org.junit.Test;
 
-    /**
-     * @return the suite of tests being tested
-     */
-    public static Test suite()
-    {
-        return new TestSuite( AppTest.class );
-    }
-
-    /**
-     * Rigourous Test :-)
-     */
-    public void testShipSetPosition()
-    {
-		int[] xy = {5,2};
-		ship.setPosition(xy[0],xy[1]);
-		
-		int[] resultArray = ship.getPosition();
-		
-		assertArrayEquals(xy,resultArray);
+public class ShipTest 
+{	
+	private Ship ship;
+	
+	@Before
+	public void initShip()
+	{
+		ship = new Ship();
+		ship.initIslands();
 	}
+	
+	@Test
+    public void testShipSetPosition()
+    { 	
+		int[] xy = {5,2};
+		ship.setPosition(xy);
+		
+		int[] result = ship.getPosition();
+		
+		assertArrayEquals(xy,result);
+	}
+	
+	@Test
 	public void testGetMapSize()
 	{
 		int[] xy = {0,0};
@@ -44,21 +37,27 @@ public class AppTest
 		
 		assertNotSame(xy,result);
 	}
+	
+	@Test
 	public void testShipSetDirection()
 	{
 		char direction = 'N';
-		ship.setDirection(direction)
+		ship.setDirection(direction);
 		
 		char result = ship.getDirection();
 		
 		assertEquals(direction,result);
 	}
+	
+	@Test
 	public void testShipGetDirection()
 	{
-		char direction = '';
+		char direction = '?';
 		char result = ship.getDirection();
 		assertNotSame(direction,result);
 	}
+	
+	@Test
 	public void testShipRotateRight()
 	{
 		char original = ship.getDirection();
@@ -73,6 +72,8 @@ public class AppTest
 		else if(original == 'W')
 			assertEquals('N',result);
 	}
+	
+	@Test
 	public void testShipRotateLeft()
 	{
 		char original = ship.getDirection();
@@ -87,48 +88,80 @@ public class AppTest
 		else if(original == 'E')
 			assertEquals('N',result);
 	}
+	
+	@Test
 	public void testShipMoveFront()
 	{
 		ship.hideIslands();
 		
 		int[] position = ship.getPosition();
+		int x = position[0];
+		int y = position[1];
+		
 		char direction = ship.getDirection();
 		
 		ship.move("n");
-		int[] resultposition = ship.getPosition();
-		
 		int[] getMapSize = ship.getMapSize();
 		
 		if(direction == 'N')
-			assertEquals(position[1]+1%getMapSize[1],resultposition[1]);
+			assertEquals((y+1)%(getMapSize[1]+1),position[1]);
 		else if(direction == 'S')
-			assertEquals(position[1]-1%getMapSize[1],resultposition[1]);
+		{
+			if(y-1<0)
+				y=getMapSize[1];
+			else
+				y--;
+			assertEquals(y,position[1]);
+		}
 		else if(direction == 'E')
-			assertEquals(position[0]+1%getMapSize[0],resultposition[0]);
+			assertEquals((x+1)%(getMapSize[0]+1),position[0]);
 		else if(direction == 'W')
-			assertEquals(position[0]-1%getMapSize[0],resultposition[0]);
+		{
+			if(x-1<0)
+				x=getMapSize[0];
+			else
+				x--;
+			assertEquals(x,position[0]);
+		}
 	}
+	
+	@Test
 	public void testShipMoveBack()
 	{
 		ship.hideIslands();
 		
 		int[] position = ship.getPosition();
+		int x = position[0];
+		int y = position[1];
+		
 		char direction = ship.getDirection();
 		
 		ship.move("w");
-		int[] resultposition = ship.getPosition();
-		
 		int[] getMapSize = ship.getMapSize();
 		
 		if(direction == 'N')
-			assertEquals(position[1]-1%getMapSize[1],resultposition[1]);
+		{
+			if(y-1<0)
+				y=getMapSize[1];
+			else
+				y--;
+			assertEquals(y,position[1]);
+		}
 		else if(direction == 'S')
-			assertEquals(position[1]+1%getMapSize[1],resultposition[1]);
+			assertEquals((y+1)%(getMapSize[1]+1),position[1]);
 		else if(direction == 'E')
-			assertEquals(position[0]-1%getMapSize[0],resultposition[0]);
+		{
+			if(x-1<0)
+				x=getMapSize[0];
+			else
+				x--;
+			assertEquals(x,position[0]);
+		}	
 		else if(direction == 'W')
-			assertEquals(position[0]+1%getMapSize[0],resultposition[0]);
+			assertEquals((x+1)%(getMapSize[0]+1),position[0]);
 	}
+	
+	@Test
 	public void testShipMovement()
 	{
 		ship.showIslands();
@@ -147,6 +180,8 @@ public class AppTest
 		
 		assertArrayEquals(resultposition,position);	
 	}
+	
+	@Test
 	public void testShipCollision()
 	{
 		ship.showIslands();
@@ -156,7 +191,7 @@ public class AppTest
 		ship.setPosition(position);
 		ship.setDirection(direction);
 		
-		//Island on 7,5
+		//Island on 5,7
 		boolean result = ship.move("nn");
 		assertFalse(result);
 	}
