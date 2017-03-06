@@ -5,40 +5,82 @@ public class Ship
 	//Ship Position
 	private int[] xy = {0,0};
 	//Ship Direction
-	private char dir = 'N';
+	private char dir = 'S';
 	
 	//Map Size and Islands
 	
-	int[][] mapislands = new int[20][20];
+	private int[][] mapislands = new int[15][15];
+	
+	boolean hiddenIslands = false;
+	
+	public void initIslands()
+	{
+		mapislands[5][7] = 1;
+		mapislands[5][3] = 1;
+	}
 	
     public void setPosition(int[] xxyy)
     {
-		xy = xxyy;
+    	int[] mapsize = getMapSize();
+    	
+    	int x = xxyy[0];
+    	int y = xxyy[1]%(mapsize[1]+1);
+    	if(x<0)
+    		x=mapsize[0];
+    	else if(x>mapsize[0])
+    		x = x%(mapsize[0]+1);
+    	if(y<0)
+    		y=mapsize[1];
+    	else if(y>mapsize[1])
+    		y=y%(mapsize[1]+1);
+    	
+		this.xy[0] = x;
+		this.xy[1] = y;
+		
+		//System.out.println(x);
+		//System.out.println(y);
 	}
 	
 	public int[] getPosition()
 	{
+		System.out.println("getPosition() ["+xy[0]+","+xy[1]+"]");
 		return xy;
 	}
 	
 	public void setDirection(char direction)
 	{
-		dir = direction;
+		//System.out.println("setDirection() ["+direction+"]");
+		this.dir = direction;
 	}
 	
 	public char getDirection()
 	{
+		//System.out.println("getDirection() ["+dir+"]");
 		return dir;
 	}
 	
 	public int[] getMapSize()
 	{
-		int[] mapsize = {mapislands.length,mapislands[0].length};
+		//System.out.println("getMapSize() ["+mapislands.length+","+mapislands[0].length+"]");
+		int[] mapsize = {mapislands.length-1,mapislands[0].length-1};
 		return mapsize;
+	}
+	
+	public void showIslands()
+	{
+		System.out.println("showIslands() [VISIBLE]");
+		hiddenIslands = false;
+	}
+	
+	public void hideIslands()
+	{
+		System.out.println("hideIslands() [HIDDEN]");
+		hiddenIslands = true;
 	}
 	
 	public boolean move(String str)
 	{
+		System.out.println("move() ["+str+"]");
 		//nnnlnnpnnw
 		int n = str.length();
 		for(int i=0;i<n;i++)
@@ -46,6 +88,7 @@ public class Ship
 			char c = str.charAt(i);
 			int[] xxyy = getPosition();
 			char direction = getDirection();
+			char newdirection = '?';
 			
 			switch(c){
 				case 'n':
@@ -70,43 +113,47 @@ public class Ship
 					break;
 				case 'l':
 					if(direction=='N')
-						direction = 'W';
+						newdirection = 'W';
 					else if(direction=='S')
-						direction = 'E';
+						newdirection = 'E';
 					else if(direction=='E')
-						direction = 'N';
+						newdirection = 'N';
 					else if(direction=='W')
-						direction = 'S';		
+						newdirection = 'S';		
 					break;
 				case 'p':
 					if(direction=='N')
-						direction = 'E';
+						newdirection = 'E';
 					else if(direction=='S')
-						direction = 'W';
+						newdirection = 'W';
 					else if(direction=='E')
-						direction = 'S';
+						newdirection = 'S';
 					else if(direction=='W')
-						direction = 'N';		
+						newdirection = 'N';		
 					break;
 				default: 
 					return false;
 			}
-			setDirection(direction);
-			if(isIsland(xxyy))
+			if(hiddenIslands == false && isIsland(xxyy) && newdirection == '?')
 			{
 				System.out.println("Statek napotkal wyspe na pozycji ["+xxyy[0]+","+xxyy[1]+"]");
 				return false;
 			}
-			else
+			else if(newdirection == '?')
 			{
 				System.out.println("RUCH NA POLE ["+xxyy[0]+","+xxyy[1]+"]");
 				setPosition(xxyy);	
+			}
+			else
+			{
+				System.out.println("OBRÓT STATKU NA KIERUNEK ["+newdirection+"]");
+				setDirection(newdirection);
 			}
 		}
 		return true;
 	}
 	
-	public Boolean isIsland(int[] xxyy)
+	public boolean isIsland(int[] xxyy)
 	{
 		if(mapislands[xxyy[0]][xxyy[1]]==1)
 			return true;
