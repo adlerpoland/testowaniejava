@@ -1,11 +1,13 @@
-package ships.ships;
+package ships;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
 import static org.junit.Assert.*;
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 public class ShipTest 
 {	
@@ -43,7 +45,6 @@ public class ShipTest
 	{
 		char direction = 'N';
 		ship.setDirection(direction);
-		
 		char result = ship.getDirection();
 		
 		assertEquals(direction,result);
@@ -61,32 +62,22 @@ public class ShipTest
 	public void testShipRotateRight()
 	{
 		char original = ship.getDirection();
+		String orient = "NESWN";
 		ship.move("p");
 		char result = ship.getDirection();
-		if(original == 'N')
-			assertEquals('E',result);
-		else if(original == 'E')
-			assertEquals('S',result);
-		else if(original == 'S')
-			assertEquals('W',result);
-		else if(original == 'W')
-			assertEquals('N',result);
+		
+		assertThat(orient.indexOf(original)+1,is(equalTo(orient.lastIndexOf(result))));
 	}
 	
 	@Test
 	public void testShipRotateLeft()
 	{
 		char original = ship.getDirection();
+		String orient = "NWSEN";
 		ship.move("l");
 		char result = ship.getDirection();
-		if(original == 'N')
-			assertEquals('W',result);
-		else if(original == 'W')
-			assertEquals('S',result);
-		else if(original == 'S')
-			assertEquals('E',result);
-		else if(original == 'E')
-			assertEquals('N',result);
+		
+		assertThat(orient.indexOf(original)+1,is(equalTo(orient.lastIndexOf(result))));
 	}
 	
 	@Test
@@ -182,18 +173,47 @@ public class ShipTest
 	}
 	
 	@Test
+	public void testShipBadMovementCmd()
+	{
+		ship.showIslands();
+		
+		int[] position = {0,0};
+		char direction = 'E';
+		
+		ship.setPosition(position);
+		ship.setDirection(direction);	
+		
+		boolean cmd = ship.move("nnna");
+		
+		assertThat(cmd,is(equalTo(false)));	
+	}
+	
+	@Test
 	public void testShipCollision()
 	{
 		ship.showIslands();
 		
-		int[] position = {5,5};
+		int[] position = {2,3};
 		char direction = 'N';
 		ship.setPosition(position);
 		ship.setDirection(direction);
 		
-		//Island on 5,7
-		boolean result = ship.move("nn");
-		assertFalse(result);
+		//Island on 3,6
+		boolean result = ship.move("nnnpn");
+		assertThat(result,is(equalTo(false)));
 	}
 	
+	/*@Rule
+	public final ExpectedException exception = ExpectedException.none();
+	
+	@Test()
+    public void testShipSetPositionThrowsIndexOutOfBoundsException()
+    { 	
+		
+		ship.setDirection('A');
+		
+		exception.expect(IndexOutOfBoundsException.class);
+		ship.move("p");
+	}
+	*/
 }
