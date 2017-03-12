@@ -1,11 +1,11 @@
-package ships.ships;
+package ships;
 
 public class Ship 
 {
 	//Ship Position
 	private int[] xy = {0,0};
 	//Ship Direction
-	private char dir = 'S';
+	private char dir = 'W';
 	
 	//Map Size and Islands
 	
@@ -15,8 +15,18 @@ public class Ship
 	
 	public void initIslands()
 	{
-		mapislands[5][7] = 1;
-		mapislands[5][3] = 1;
+		mapislands[11][0] = 1;
+		mapislands[8][1] = 1;
+		mapislands[9][1] = 1;
+		mapislands[8][2] = 1;
+		mapislands[7][5] = 1;
+		mapislands[11][5] = 1;
+		mapislands[3][6] = 1;
+		mapislands[6][8] = 1;
+		mapislands[2][9] = 1;
+		mapislands[11][11] = 1;
+		mapislands[5][13] = 1;
+		mapislands[0][14] = 1;
 	}
 	
     public void setPosition(int[] xxyy)
@@ -37,8 +47,7 @@ public class Ship
 		this.xy[0] = x;
 		this.xy[1] = y;
 		
-		//System.out.println(x);
-		//System.out.println(y);
+		System.out.println("RUCH NA POLE ["+x+","+y+"]");
 	}
 	
 	public int[] getPosition()
@@ -49,39 +58,32 @@ public class Ship
 	
 	public void setDirection(char direction)
 	{
-		//System.out.println("setDirection() ["+direction+"]");
 		this.dir = direction;
 	}
 	
 	public char getDirection()
 	{
-		//System.out.println("getDirection() ["+dir+"]");
 		return dir;
 	}
 	
 	public int[] getMapSize()
 	{
-		//System.out.println("getMapSize() ["+mapislands.length+","+mapislands[0].length+"]");
 		int[] mapsize = {mapislands.length-1,mapislands[0].length-1};
 		return mapsize;
 	}
 	
 	public void showIslands()
 	{
-		System.out.println("showIslands() [VISIBLE]");
 		hiddenIslands = false;
 	}
 	
 	public void hideIslands()
 	{
-		System.out.println("hideIslands() [HIDDEN]");
 		hiddenIslands = true;
 	}
 	
 	public boolean move(String str)
 	{
-		System.out.println("move() ["+str+"]");
-		//nnnlnnpnnw
 		int n = str.length();
 		for(int i=0;i<n;i++)
 		{
@@ -112,24 +114,12 @@ public class Ship
 						xxyy[0]++;				
 					break;
 				case 'l':
-					if(direction=='N')
-						newdirection = 'W';
-					else if(direction=='S')
-						newdirection = 'E';
-					else if(direction=='E')
-						newdirection = 'N';
-					else if(direction=='W')
-						newdirection = 'S';		
+					String orient = "NWSEN";
+					newdirection = orient.charAt(orient.indexOf(direction)+1);
 					break;
 				case 'p':
-					if(direction=='N')
-						newdirection = 'E';
-					else if(direction=='S')
-						newdirection = 'W';
-					else if(direction=='E')
-						newdirection = 'S';
-					else if(direction=='W')
-						newdirection = 'N';		
+					orient = "NESWN";
+					newdirection = orient.charAt(orient.indexOf(direction)+1);
 					break;
 				default: 
 					return false;
@@ -141,7 +131,6 @@ public class Ship
 			}
 			else if(newdirection == '?')
 			{
-				System.out.println("RUCH NA POLE ["+xxyy[0]+","+xxyy[1]+"]");
 				setPosition(xxyy);	
 			}
 			else
