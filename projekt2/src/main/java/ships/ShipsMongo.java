@@ -17,11 +17,22 @@ public class ShipsMongo {
 		}
 	}
 	
-	public void addShip(String name){
+	public int[][] getHistoryByName(String name){
+		  Ship p = ships.findByName(name);
+		  if (p == null){
+			  System.out.println("EMPTY");
+			  int[][] in = {};
+			  return in;
+		  }
+		  return p.getHistory();
+	  }
+	
+	public boolean addShip(String name){
 		Ship s = ships.findByName(name);
 		if (s == null){
 			s = new Ship(name);
 		}
 		ships.save(s);
+		return true;
 	}
 }

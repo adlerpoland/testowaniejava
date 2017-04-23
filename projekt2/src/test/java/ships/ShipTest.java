@@ -175,22 +175,6 @@ public class ShipTest
 	}
 	
 	@Test
-	public void testShipBadMovementCmd()
-	{
-		map.showIslands();
-		
-		int[] position = {0,0};
-		char direction = 'E';
-		
-		ship.setPosition(map,position);
-		ship.setDirection(direction);	
-		
-		boolean cmd = ship.move(map,"nnna");
-		
-		assertThat(cmd,is(equalTo(false)));	
-	}
-	
-	@Test
 	public void testShipCollision()
 	{
 		map.showIslands();
@@ -204,18 +188,4 @@ public class ShipTest
 		boolean result = ship.move(map,"nnnpn");
 		assertThat(result,is(equalTo(false)));
 	}
-	
-	/*@Rule
-	public final ExpectedException exception = ExpectedException.none();
-	
-	@Test()
-    public void testShipSetPositionThrowsIndexOutOfBoundsException()
-    { 	
-		
-		ship.setDirection('A');
-		
-		exception.expect(IndexOutOfBoundsException.class);
-		ship.move("p");
-	}
-	*/
 }

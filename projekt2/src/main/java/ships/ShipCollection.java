@@ -9,6 +9,7 @@ import com.mongodb.DB;
 import com.mongodb.MongoClient;
 
 public class ShipCollection {
+	
 	private MongoCollection ships;
 	
 	public ShipCollection() throws UnknownHostException{
@@ -18,7 +19,8 @@ public class ShipCollection {
 	  }
 	  
 	  public Ship findByName(String name){
-		  return ships.findOne("{name: #", name).as(Ship.class);
+		  //return ships.findOne("{name: #", name).as(Ship.class);
+		  return ships.findOne("{_id: #", name).as(Ship.class);
 	  }
 	  
 	  public void save(Ship s){

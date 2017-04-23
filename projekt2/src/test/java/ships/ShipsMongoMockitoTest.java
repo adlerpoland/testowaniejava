@@ -1,6 +1,8 @@
 package ships;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.easymock.EasyMock.expect;
+import static org.junit.Assert.assertArrayEquals;
 import static org.mockito.Mockito.doReturn;
 
 import java.util.Arrays;
@@ -90,8 +92,10 @@ public class ShipsMongoMockitoTest {
 		int xy[] = {1,9};
 		james.setPosition(map, xy);
 		
+		map.initIslands();
+		
 		xy[1] = 10;
-		james.setDirection('e');
+		james.setDirection('E');
 		james.move(map, "n");
 		
 		//Island on 2,9 ship shouldn't move
@@ -109,14 +113,18 @@ public class ShipsMongoMockitoTest {
 		
 		int xy[] = {9,7};
 		bob.setPosition(map, xy);
-		bob.setDirection('e');
+		bob.setDirection('E');
 		bob.move(map, "npnpnpnpn");
 		
-		int[][] array = {{9,7},{9,8},{10,8},{10,7},{9,7}};
+		int[][] array = {{9,7},{10,7},{10,6},{9,7},{10,7}};
 		int[][] output = shipcollection.findByName("bob").getHistory();
 		
 		assertThat(output).contains(array);
 	}
+	
+	
+	
+	
 	
 	
 	

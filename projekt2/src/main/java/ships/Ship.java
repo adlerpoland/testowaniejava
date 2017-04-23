@@ -1,5 +1,6 @@
 package ships;
 import ships.Map;
+import ships.ShipsMongo;
 
 public class Ship 
 {
@@ -54,7 +55,7 @@ public class Ship
 		this.historyxy[currentMove][1] = y;
 		currentMove++;
 		
-		System.out.println("RUCH NA POLE ["+x+","+y+"]");
+		//System.out.println("RUCH NA POLE ["+x+","+y+"]");
 	}
     
     public int getCurrentMove()
@@ -69,7 +70,7 @@ public class Ship
 	
 	public int[] getPosition()
 	{
-		System.out.println("getPosition() ["+xy[0]+","+xy[1]+"]");
+		//System.out.println("getPosition() ["+xy[0]+","+xy[1]+"]");
 		return xy;
 	}
 	
@@ -85,7 +86,10 @@ public class Ship
 	
 	public void setDirection(char direction)
 	{
-		this.dir = direction;
+		if(direction=='N'||direction=='W'||direction=='E'||direction=='S')
+			this.dir = direction;
+		else
+			throw new IndexOutOfBoundsException();
 	}
 	
 	public char getDirection()
@@ -133,7 +137,7 @@ public class Ship
 					newdirection = orient.charAt(orient.indexOf(direction)+1);
 					break;
 				default: 
-					return false;
+					throw new IndexOutOfBoundsException();
 			}
 			if(map.hiddenIslands == false && map.isIsland(xxyy) && newdirection == '?')
 			{
@@ -146,7 +150,7 @@ public class Ship
 			}
 			else
 			{
-				System.out.println("OBRÓT STATKU NA KIERUNEK ["+newdirection+"]");
+				//System.out.println("OBRÓT STATKU NA KIERUNEK ["+newdirection+"]");
 				setDirection(newdirection);
 			}
 		}
