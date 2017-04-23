@@ -9,21 +9,31 @@ public class Ship
 	private int[] xy = {0,0};
 	//Ship Direction
 	private char dir = 'W';
+	
 	//Position history
 	private int[][] historyxy = new int[225][2];
 	private int currentMove = 0;
 	
-	public Ship() { }
+	public Ship() {
+		for(int i=0;i<225;i++)
+		{
+			this.historyxy[i][0] = -1;
+			this.historyxy[i][1] = -1;
+		}
+	}
 	
 	public Ship(String n)
 	{
 		this.name = n;
+		for(int i=0;i<225;i++)
+		{
+			this.historyxy[i][0] = -1;
+			this.historyxy[i][1] = -1;
+		}
 	}
 	
     public void setPosition(Map map,int[] xxyy)
-    {
-    	currentMove++;
-    	
+    {	
     	int[] mapsize = map.getMapSize();
     	
     	int x = xxyy[0];
@@ -42,6 +52,7 @@ public class Ship
 		
 		this.historyxy[currentMove][0] = x;
 		this.historyxy[currentMove][1] = y;
+		currentMove++;
 		
 		System.out.println("RUCH NA POLE ["+x+","+y+"]");
 	}
@@ -64,7 +75,12 @@ public class Ship
 	
 	public int[] getHistoryPosition(int move)
 	{
-		return historyxy[move];
+		return historyxy[move-1];
+	}
+	
+	public int[][] getHistory()
+	{
+		return historyxy;
 	}
 	
 	public void setDirection(char direction)
