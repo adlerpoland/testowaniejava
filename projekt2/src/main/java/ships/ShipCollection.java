@@ -17,8 +17,8 @@ public class ShipCollection {
 		ships = new Jongo(db).getCollection("ships");
 	  }
 	  
-	  public Ship findByPosition(int[] xy){
-		  return ships.findOne("{_id: #", xy).as(Ship.class);
+	  public Ship findByName(String name){
+		  return ships.findOne("{name: #", name).as(Ship.class);
 	  }
 	  
 	  public void save(Ship s){

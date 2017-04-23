@@ -17,12 +17,11 @@ public class ShipsMongo {
 		}
 	}
 	
-	public void addShip(int[] xy){
-		Ship s = ships.findByPosition(xy);
+	public void addShip(String name){
+		Ship s = ships.findByName(name);
 		if (s == null){
-			s = new Ship();
+			s = new Ship(name);
 		}
-		//s.setPosition(xy);
 		ships.save(s);
 	}
 }

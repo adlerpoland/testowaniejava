@@ -17,7 +17,7 @@ public class ShipTest
 	@Before
 	public void init()
 	{
-		ship = new Ship();
+		ship = new Ship("concordia");
 		map = new Map();
 		map.initIslands();
 	}

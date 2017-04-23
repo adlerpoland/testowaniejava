@@ -3,13 +3,27 @@ import ships.Map;
 
 public class Ship 
 {
+	//Ship Name
+	private String name = "concordia";
 	//Ship Position
 	private int[] xy = {0,0};
 	//Ship Direction
 	private char dir = 'W';
+	//Position history
+	private int[][] historyxy = new int[225][2];
+	private int currentMove = 0;
+	
+	public Ship() { }
+	
+	public Ship(String n)
+	{
+		this.name = n;
+	}
 	
     public void setPosition(Map map,int[] xxyy)
     {
+    	currentMove++;
+    	
     	int[] mapsize = map.getMapSize();
     	
     	int x = xxyy[0];
@@ -26,13 +40,31 @@ public class Ship
 		this.xy[0] = x;
 		this.xy[1] = y;
 		
+		this.historyxy[currentMove][0] = x;
+		this.historyxy[currentMove][1] = y;
+		
 		System.out.println("RUCH NA POLE ["+x+","+y+"]");
 	}
+    
+    public int getCurrentMove()
+    {
+    	return currentMove;
+    }
+    
+    public String getName()
+    {
+    	return name;
+    }
 	
 	public int[] getPosition()
 	{
 		System.out.println("getPosition() ["+xy[0]+","+xy[1]+"]");
 		return xy;
+	}
+	
+	public int[] getHistoryPosition(int move)
+	{
+		return historyxy[move];
 	}
 	
 	public void setDirection(char direction)
